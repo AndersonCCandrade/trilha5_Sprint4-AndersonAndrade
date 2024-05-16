@@ -51,5 +51,29 @@ BEGIN
     RETURN v_FIM;
 END;
 
+--_______________________________________________________________________________________
+
+--  Validar novo projeto
+--  Alterando a procedure brh.insere_projeto para n�o permitir cadastrar projetos inv�lidos:
+--  O nome do novo do projeto deve ter duas ou mais letras.
+--  Se tiver menos caracteres, ou for null, lance uma exce��o com a mensagem "Nome de projeto inv�lido! Deve ter dois ou mais caracteres.".
+
+CREATE OR REPLACE PROCEDURE brh.insere_projeto
+(
+    p_NOME          BRH.PROJETO.NOME%TYPE,
+    p_RESPONSAVEL   BRH.PROJETO.RESPONSAVEL%TYPE,
+    p_INICIO        BRH.PROJETO.INICIO%TYPE   
+)  
+IS
+BEGIN
+    IF LENGTH(p_NOME) < 2 OR p_NOME IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20001,'Nome de projeto inv�lido! Deve ter dois ou mais caracteres.');
+    ELSE
+        INSERT INTO BRH.PROJETO
+        (NOME, RESPONSAVEL, INICIO)
+        VALUES
+        (p_NOME, p_RESPONSAVEL, p_INICIO);
+    END IF;
+END;
 
 --_______________________________________________________________________________________
