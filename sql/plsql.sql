@@ -17,3 +17,20 @@ END;
 
 
 --_______________________________________________________________________________________
+--  Criar fun��o calcula_idade
+--  Criando uma fun��o que informa a idade a partir de uma data.
+
+CREATE OR REPLACE FUNCTION  brh.calcula_idade
+(
+    p_DATA_NASCIMENTO IN  DATE
+)
+RETURN NUMBER
+IS
+    v_IDADE NUMBER;
+BEGIN
+    v_IDADE := TRUNC(MONTHS_BETWEEN (SYSDATE, p_DATA_NASCIMENTO)/12);
+    return v_IDADE;
+END;
+
+
+--_______________________________________________________________________________________
