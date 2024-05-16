@@ -77,3 +77,25 @@ BEGIN
 END;
 
 --_______________________________________________________________________________________
+
+--  Validar c�lculo de idade
+--  Alterando a fun��o brh.calcula_idade para n�o permitir datas inv�lidas;
+
+CREATE OR REPLACE FUNCTION  brh.calcula_idade
+(
+    p_DATA_NASCIMENTO IN  DATE
+)
+RETURN NUMBER
+IS
+    v_IDADE NUMBER;
+BEGIN
+    IF p_DATA_NASCIMENTO >= SYSDATE OR p_DATA_NASCIMENTO IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Imposs�vel calcular idade! Data inv�lida: '|| p_DATA_NASCIMENTO);
+    ELSE    
+        v_IDADE := TRUNC(MONTHS_BETWEEN (SYSDATE, p_DATA_NASCIMENTO)/12);
+        return v_IDADE;
+    END IF;
+END;
+
+
+--_______________________________________________________________________________________
